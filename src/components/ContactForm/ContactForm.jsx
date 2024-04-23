@@ -23,7 +23,7 @@ const ContactForm = ({ onSubmit }) => {
 		onSubmit(values);
 		resetForm();
 	};
-
+  console.log('returned')
 	return (
 		<div>
 			<Formik
