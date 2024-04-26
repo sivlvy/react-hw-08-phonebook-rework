@@ -1,0 +1,6 @@
+.block {
+  @apply flex items-center justify-center flex-col  mb-8 ;
+  label {
+    @apply text-gray-700 w-12;
+  }
+}
