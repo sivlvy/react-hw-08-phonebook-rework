@@ -21,6 +21,7 @@ import { setFilter } from '../../redux/filter/filter-slice';
 export const MyContacts = () => {
 	const { isLoading, error } = useSelector(selectAllContacts);
 	const items = useSelector(selectFilteredContacts);
+	console.log(items);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(fetchContacts());
@@ -47,7 +48,9 @@ export const MyContacts = () => {
 				<ContactForm onSubmit={onAddContact} />
 			</div>
 			<div>
-				<h2 className="font-bold text-center text-xl mb-10">Contacts</h2>
+				<h2 className="font-bold text-center text-xl mb-10">
+					Contacts
+				</h2>
 				<Filter name="filter" onChange={handleChange} />
 
 				{isLoading ? (
@@ -55,7 +58,10 @@ export const MyContacts = () => {
 				) : error ? (
 					<div message={error}></div>
 				) : items?.length > 0 ? (
-					<ContactsList contacts={items} onDeleteContact={onDeleteContact} />
+					<ContactsList
+						contacts={items}
+						onDeleteContact={onDeleteContact}
+					/>
 				) : (
 					<Error />
 				)}

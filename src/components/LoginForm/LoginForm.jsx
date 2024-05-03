@@ -1,40 +1,66 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
 
-import css from './login.module.scss';
-
-const initialValues = {
+const INITIAL_STATE = {
 	email: '',
 	password: '',
 };
 
 const LoginForm = ({ onSubmit }) => {
-	const [data, setData] = useState({ ...initialValues });
+	const [state, setState] = useState({ ...INITIAL_STATE });
 
-	const handleSubmit = e => {};
+	const handleChange = ({ target }) => {
+		const { name, value, type, checked } = target;
+		const newValue = type === 'checkbox' ? checked : value;
 
-	const handleChange = ({ target }) => {};
+		setState({
+			...state,
+			[name]: newValue,
+		});
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		onSubmit({ ...state });
+		reset();
+	};
+
+	const reset = () => {
+		setState({ ...INITIAL_STATE });
+	};
+
+	const emailId = useId();
+	const passwordId = useId();
+
+	const { email, password } = state;
 
 	return (
 		<form
-			className="bg-slate-200 w-fit px-16 py-8 mx-auto mt-24"
 			onSubmit={handleSubmit}
+			className="bg-slate-200 w-fit px-16 py-8 mx-auto mt-24"
 		>
-			<h2 className="text-center">Sign In</h2>
-
-			<div className={css.block}>
-				<label htmlFor="">Email</label>
-				<input type="email" required={true} onChange={handleChange} />
+			<div>
+				<label htmlFor={emailId}>Email:</label>
+				<input
+					value={email}
+					onChange={handleChange}
+					type="email"
+					name="email"
+					id={emailId}
+					required
+				/>
 			</div>
-			<div className={css.block}>
-				<label htmlFor="">Password</label>
-				<input type="password" required={true} onChange={handleChange} />
+			<div>
+				<label htmlFor={passwordId}>Password:</label>
+				<input
+					value={password}
+					onChange={handleChange}
+					type="password"
+					name="password"
+					id={passwordId}
+					required
+				/>
 			</div>
-			<button
-				className="block mx-auto border-2 border-slate-300  px-8 py-1"
-				type="submit"
-			>
-				Sign in
-			</button>
+			<button type="submit">Login</button>
 		</form>
 	);
 };
